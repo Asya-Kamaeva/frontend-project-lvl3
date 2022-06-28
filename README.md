@@ -13,7 +13,7 @@
 
 1. Clone repo
 
-- git clone git@github.com:Asya-Kamaeva/frontend-project-lvl2.git
+- git clone git@github.com:Asya-Kamaeva/frontend-project-lvl3.git
 
 2. Install dependenses
 

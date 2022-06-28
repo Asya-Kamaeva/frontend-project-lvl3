@@ -17,10 +17,10 @@ jobs:
         run: make lint
       # - name: run jest
       #   run: make test
-      - name: code coverage
-        uses: paambaati/codeclimate-action@v2.5.7
-        env:
-          CODECLIMATE: ${{ secrets.CODECLIMATE }}
-        with:
-          # coverageCommand: make test
-          debug: true
+      # - name: code coverage
+      #   uses: paambaati/codeclimate-action@v2.5.7
+      #   env:
+      #     CODECLIMATE: ${{ secrets.CODECLIMATE }}
+      #   with:
+      #     # coverageCommand: make test
+      #     debug: true
