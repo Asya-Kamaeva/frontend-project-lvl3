@@ -1,15 +1,24 @@
-# 🚀 Welcome to your new awesome project!
+## Hexlet tests and linter status:
 
-This project has been created using **webpack-cli**, you can now run
+[![Actions Status](https://github.com/Asya-Kamaeva/frontend-project-lvl3/workflows/hexlet-check/badge.svg)](https://github.com/Asya-Kamaeva/frontend-project-lvl3/actions)
+[![Actions Status](https://github.com/Asya-Kamaeva/frontend-project-lvl3/workflows/linter/badge.svg)](https://github.com/Asya-Kamaeva/frontend-project-lvl3/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/4b8fc07d9d3b36bc3f86/maintainability)](https://codeclimate.com/github/Asya-Kamaeva/frontend-project-lvl3/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/4b8fc07d9d3b36bc3f86/test_coverage)](https://codeclimate.com/github/Asya-Kamaeva/frontend-project-lvl3/test_coverage)
 
-```
-npm run build
-```
+## Description:
 
-or
+.........
 
-```
-yarn build
-```
+## Setup:
 
-to bundle your application
+1. Clone repo
+
+- git clone git@github.com:Asya-Kamaeva/frontend-project-lvl2.git
+
+2. Install dependenses
+
+- make install
+
+3. Link the package
+
+- make link
