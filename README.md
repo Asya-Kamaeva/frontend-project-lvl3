@@ -1,6 +1,15 @@
-### Hexlet tests and linter status:
-[![Actions Status](https://github.com/Asya-Kamaeva/frontend-project-lvl3/workflows/hexlet-check/badge.svg)](https://github.com/Asya-Kamaeva/frontend-project-lvl3/actions)
+# 🚀 Welcome to your new awesome project!
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/4b8fc07d9d3b36bc3f86/maintainability)](https://codeclimate.com/github/Asya-Kamaeva/frontend-project-lvl3/maintainability)
+This project has been created using **webpack-cli**, you can now run
 
-[![Test Coverage](https://api.codeclimate.com/v1/badges/4b8fc07d9d3b36bc3f86/test_coverage)](https://codeclimate.com/github/Asya-Kamaeva/frontend-project-lvl3/test_coverage)
+```
+npm run build
+```
+
+or
+
+```
+yarn build
+```
+
+to bundle your application

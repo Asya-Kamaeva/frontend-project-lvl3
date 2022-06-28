@@ -9,3 +9,10 @@ lint:
 
 test:
 	npx jest --coverage
+
+build:
+	npm run build
+
+#запуск веб сервера
+launch:
+	npx webpack serve
