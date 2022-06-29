@@ -9,13 +9,17 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const isProduction = process.env.NODE_ENV === 'production';
 
 const config = {
+  watch: true,
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
   },
   devServer: {
+    contentBase: path.join(__dirname, './src'),
     open: true,
     host: 'localhost',
+    port: 8000,
+    // historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

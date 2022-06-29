@@ -8,8 +8,7 @@
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch",
-    "serve": "webpack serve"
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -23,7 +22,9 @@
   "homepage": "https://github.com/Asya-Kamaeva/frontend-project-lvl3#readme",
   "dependencies": {
     "bootstrap": "^5.2.0-beta1",
-    "make": "^0.8.1"
+    "make": "^0.8.1",
+    "on-change": "^4.0.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@webpack-cli/generators": "^2.5.0",
