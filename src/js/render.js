@@ -1,19 +1,36 @@
+import i18n from 'i18next';
+import ruResource from '../locales/ru.js';
+
 const input = document.getElementById('url-input');
 const message = document.querySelector('.feedback');
 
 export default (obj) => {
+  const i18nextInstance = i18n.createInstance();
+  i18nextInstance.init({
+    lng: 'ru',
+    debug: true,
+    resources: {
+      ru: ruResource,
+    },
+  });
   if (!obj.isValid) {
     input.classList.add('is-invalid');
     message.classList.add('text-danger');
-    const text = obj.error.startsWith('this must be a valid URL')
-      ? 'Ссылка должна быть валидным URL'
-      : 'RSS уже существует';
-    message.textContent = text;
+    switch (obj.error) {
+      case 'url':
+        message.textContent = i18nextInstance.t('url');
+        break;
+      case 'notOneOf':
+        message.textContent = i18nextInstance.t('notOneOf');
+        break;
+      default:
+        throw new Error('Unknown value');
+    }
   }
   if (obj.isValid) {
     input.classList.remove('is-invalid');
     message.classList.remove('text-danger');
     message.classList.add('text-success');
-    message.textContent = 'RSS успешно загружен';
+    message.textContent = i18nextInstance.t('success');
   }
 };

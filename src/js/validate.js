@@ -8,6 +8,12 @@ const validate = (currentUrl, urls) => {
   const scheme = baseScheme.notOneOf(urls);
   return scheme.validate(currentUrl);
 };
+yup.setLocale({
+  mixed: {
+    required: 'Required Field sdfvsdfvv',
+    default: 'Não é válido',
+  },
+});
 
 export default () => {
   const state = {
@@ -29,13 +35,15 @@ export default () => {
     const enteredUrl = form.elements.url.value;
     validate(enteredUrl, state.urls)
       .then(() => {
-        watchedState.isValid = true;
+        state.isValid = true;
         watchedState.urls.push(enteredUrl);
         e.target.reset();
       })
       .catch((err) => {
-        watchedState.isValid = false;
-        watchedState.error = err.message;
+        console.log(err.name);
+        console.log(err.errors);
+        state.isValid = false;
+        watchedState.error = err.type;
       });
   });
 };
