@@ -9,7 +9,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const isProduction = process.env.NODE_ENV === 'production';
 
 const config = {
-  watch: true,
+  // watch: true,
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
