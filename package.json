@@ -21,8 +21,10 @@
   },
   "homepage": "https://github.com/Asya-Kamaeva/frontend-project-lvl3#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "bootstrap": "^5.2.0-beta1",
     "i18next": "^21.8.11",
+    "lodash": "^4.17.21",
     "make": "^0.8.1",
     "on-change": "^4.0.1",
     "yup": "^0.32.11"

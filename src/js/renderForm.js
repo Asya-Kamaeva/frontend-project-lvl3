@@ -24,7 +24,7 @@ export default (obj) => {
         message.textContent = i18nextInstance.t('notOneOf');
         break;
       default:
-        throw new Error('Unknown value');
+        throw new Error(`Unknown value ${obj.error}`);
     }
   }
   if (obj.isValid) {
