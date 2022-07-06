@@ -5,7 +5,6 @@ export default (newTitle, newDesc, newLink) => {
   const desc = modal.querySelector('.modal-body');
   const closeBtns = modal.querySelectorAll('[type="button"]');
   const link = modal.querySelector('.full-article');
-  console.log('!!!!', newTitle, newDesc, newLink);
   body.classList.add('modal-open');
   body.setAttribute('style', 'overflow: hidden; padding-right: 0px;');
   modal.classList.add('show');
@@ -15,7 +14,8 @@ export default (newTitle, newDesc, newLink) => {
   modal.setAttribute('aria-modal', 'true');
 
   title.textContent = newTitle;
-  desc.textContent = newDesc;
+  // desc.textContent = newDesc;
+  desc.innerHTML = newDesc;
   link.setAttribute('href', newLink);
 
   Array.from(closeBtns).map((btn) => btn.addEventListener('click', () => {

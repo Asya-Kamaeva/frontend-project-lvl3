@@ -43,6 +43,9 @@ const renderData = (obj) => {
   postTitle.textContent = 'Посты';
   feedsTitle.textContent = 'Фиды';
 
+  postList.innerHTML = '';
+  feedsList.innerHTML = '';
+
   obj.feedsData.map((feed) => {
     const liFeeds = document.createElement('li');
     liFeeds.classList.add('list-group-item', 'border-0', 'border-end-0');

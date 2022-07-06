@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 import onChange from 'on-change';
-import axios from 'axios';
+// import axios from 'axios';
 import renderForm from './renderForm.js';
 import renderRss from './renderRss.js';
 
@@ -32,14 +32,15 @@ export default () => {
     }
   });
 
-  // const getData = async (url) => {
-  //   const response = await axios.get(url);
-  //   return response.data;
-  // };
-
-  const requestData = async (url) => {
-    const response = await axios.get(url);
-    const rawData = response.data;
+  const requestData = (url) => {
+    const rawData = fetch(
+      `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`,
+    )
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => data.contents);
     return rawData;
   };
 
