@@ -35,8 +35,8 @@ export default (obj) => {
       'justify-content-between',
       'align-items-start',
       'border-0',
-      'border-end-0',
       'fw-bold',
+      'border-end-0',
     );
     if (post.read === true) {
       liPost.classList.remove('fw-bold');
