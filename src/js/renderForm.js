@@ -5,6 +5,7 @@ const input = document.getElementById('url-input');
 const message = document.querySelector('.feedback');
 
 export default (obj) => {
+  console.log('!!!renderForm', obj);
   const i18nextInstance = i18n.createInstance();
   i18nextInstance.init({
     lng: 'ru',
@@ -14,6 +15,7 @@ export default (obj) => {
     },
   });
   if (!obj.isValid) {
+    message.textContent = '';
     input.classList.add('is-invalid');
     message.classList.add('text-danger');
     switch (obj.error) {
@@ -22,6 +24,9 @@ export default (obj) => {
         break;
       case 'notOneOf':
         message.textContent = i18nextInstance.t('notOneOf');
+        break;
+      case 'notRss':
+        message.textContent = i18nextInstance.t('notRss');
         break;
       default:
         throw new Error(`Unknown value ${obj.error}`);

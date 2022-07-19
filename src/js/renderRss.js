@@ -1,38 +1,6 @@
-import { uniqueId } from 'lodash';
 import modalView from './modalView.js';
 
-const state = {
-  feedsData: [],
-  postsData: [],
-};
-
-const transformData = (data) => {
-  const titleFeed = data.querySelector('title');
-  const descFeed = data.querySelector('description');
-  const items = data.querySelectorAll('item');
-
-  const feed = {
-    title: titleFeed.textContent,
-    description: descFeed.textContent,
-    id: uniqueId(),
-  };
-  state.feedsData.push(feed);
-
-  Array.from(items).map((item) => {
-    const post = {
-      title: item.querySelector('title').textContent,
-      desc: item.querySelector('description').textContent,
-      link: item.querySelector('link').textContent,
-      feedId: feed.id,
-      postId: uniqueId(),
-    };
-    state.postsData.push(post);
-    return post;
-  });
-  console.log(state);
-};
-
-const renderData = (obj) => {
+export default (obj) => {
   const posts = document.querySelector('.posts');
   const feeds = document.querySelector('.feeds');
   const postTitle = posts.querySelector('.card-title');
@@ -68,29 +36,28 @@ const renderData = (obj) => {
       'align-items-start',
       'border-0',
       'border-end-0',
+      'fw-bold',
     );
+    if (post.read === true) {
+      liPost.classList.remove('fw-bold');
+      liPost.classList.add('fw-normal', 'link-secondary');
+    }
     const linkPost = document.createElement('a');
     linkPost.setAttribute('href', post.link);
     linkPost.setAttribute('target', '_blank');
     linkPost.setAttribute('rel', 'noopener noreferrer');
-    linkPost.setAttribute('data-id', 1);
-    liPost.classList.add('fw-bold');
+    linkPost.setAttribute('data-id', post.postId);
     liPost.textContent = post.title;
     const btnPost = document.createElement('button');
     btnPost.setAttribute('type', 'button');
-    btnPost.setAttribute('data-id', 1);
+    btnPost.setAttribute('data-id', post.postId);
     btnPost.setAttribute('data-bs-toggle', 'modal');
     btnPost.setAttribute('data-bs-target', '#modal');
     btnPost.classList.add('btn', 'btn-outline-primary', 'btn-sm');
     btnPost.textContent = 'Просмотр';
     liPost.append(linkPost, btnPost);
     postList.append(liPost);
-    btnPost.addEventListener('click', () => modalView(post.title, post.desc, post.link));
+    btnPost.addEventListener('click', () => modalView(post));
     return liPost;
   });
-};
-
-export default (data) => {
-  transformData(data);
-  renderData(state);
 };

@@ -1,4 +1,4 @@
-export default (newTitle, newDesc, newLink) => {
+export default (obj) => {
   const { body } = document;
   const modal = document.querySelector('.modal');
   const title = modal.querySelector('.modal-title');
@@ -13,10 +13,13 @@ export default (newTitle, newDesc, newLink) => {
   modal.removeAttribute('aria-hidden');
   modal.setAttribute('aria-modal', 'true');
 
-  title.textContent = newTitle;
-  // desc.textContent = newDesc;
-  desc.innerHTML = newDesc;
-  link.setAttribute('href', newLink);
+  title.textContent = obj.title;
+  desc.innerHTML = obj.desc;
+  link.setAttribute('href', obj.link);
+
+  const div = document.createElement('div');
+  div.classList.add('modal-backdrop', 'fade', 'show');
+  body.append(div);
 
   Array.from(closeBtns).map((btn) => btn.addEventListener('click', () => {
     body.classList.remove('modal-open');
@@ -26,5 +29,6 @@ export default (newTitle, newDesc, newLink) => {
     modal.removeAttribute('role');
     modal.removeAttribute('aria-modal');
     modal.setAttribute('aria-hidden', 'true');
+    div.remove();
   }));
 };

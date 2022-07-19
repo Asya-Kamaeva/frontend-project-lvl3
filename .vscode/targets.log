@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Fri Jul  1 15:48:56 2022
+# Make data base, printed on Thu Jul  7 11:36:52 2022
 
 # Variables
 
@@ -38,7 +38,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/55/nrjfp6mj5gd531l8zntx6pjw0000gn/T/vscode-ipc-48308bb1-25e5-45e8-81c3-d64175d176e5.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/55/nrjfp6mj5gd531l8zntx6pjw0000gn/T/vscode-ipc-a9d9e958-90d7-4926-9f79-e036a6586d5e.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -46,13 +46,15 @@ PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
+LaunchInstanceID = 3B28028F-E0FF-489B-BA19-F15C22542DAA
+# environment
 VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.M8wH5SdZ1Z/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.ZgUqcnI3sU/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -118,9 +120,6 @@ XPC_SERVICE_NAME = application.com.microsoft.VSCode.24442902.24442909
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
- 
-make: *** No rule to make target `all'.  Stop.
-
 +F = $(notdir $+)
 # environment
 __CF_USER_TEXT_ENCODING = 0x1F5:0x7:0x31
@@ -134,6 +133,8 @@ MAKEFILES :=
 PAGER = less
 # environment
 LC_ALL = C
+# environment
+SECURITYSESSIONID = 186a3
 # automatic
 ^F = $(notdir $^)
 # default
@@ -145,9 +146,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 37383
+VSCODE_PID = 1543
 # variable set hash-table stats:
-# Load=66/1024=6%, Rehash=0, Collisions=1/90=1%
+# Load=68/1024=7%, Rehash=0, Collisions=1/92=1%
 
 # Pattern-specific Variable Values
 
@@ -155,9 +156,9 @@ VSCODE_PID = 37383
 
 # Directories
 
-# . (device 16777223, inode 24442719): 16 files, no impossibilities.
+# . (device 16777221, inode 24442719): 17 files, no impossibilities.
 
-# 16 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -256,6 +257,8 @@ install:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Fri Jul  1 15:48:56 2022
+# Finished Make data base on Thu Jul  7 11:36:52 2022
 
  
+make: *** No rule to make target `all'.  Stop.
+
