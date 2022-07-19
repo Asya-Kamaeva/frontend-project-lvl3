@@ -5,7 +5,6 @@ const input = document.getElementById('url-input');
 const message = document.querySelector('.feedback');
 
 export default (obj) => {
-  console.log('!!!renderForm', obj);
   const i18nextInstance = i18n.createInstance();
   i18nextInstance.init({
     lng: 'ru',
@@ -27,6 +26,9 @@ export default (obj) => {
         break;
       case 'notRss':
         message.textContent = i18nextInstance.t('notRss');
+        break;
+      case 'netWorkError':
+        message.textContent = i18nextInstance.t('netWorkError');
         break;
       default:
         throw new Error(`Unknown value ${obj.error}`);

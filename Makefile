@@ -7,8 +7,8 @@ publish:
 lint:
 	npx eslint .
 
-test:
-	npx jest --coverage
+# test:
+# 	npx jest --coverage
 
 build:
 	npm run build

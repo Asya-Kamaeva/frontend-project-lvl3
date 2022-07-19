@@ -1,6 +1,5 @@
 import * as yup from 'yup';
 import onChange from 'on-change';
-// import axios from 'axios';
 import renderForm from './renderForm.js';
 import renderRss from './renderRss.js';
 import requestData from './requestData.js';

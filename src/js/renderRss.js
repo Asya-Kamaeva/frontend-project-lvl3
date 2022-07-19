@@ -47,7 +47,7 @@ export default (obj) => {
     linkPost.setAttribute('target', '_blank');
     linkPost.setAttribute('rel', 'noopener noreferrer');
     linkPost.setAttribute('data-id', post.postId);
-    liPost.textContent = post.title;
+    linkPost.textContent = post.title;
     const btnPost = document.createElement('button');
     btnPost.setAttribute('type', 'button');
     btnPost.setAttribute('data-id', post.postId);
