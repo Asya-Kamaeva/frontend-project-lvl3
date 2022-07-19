@@ -35,11 +35,12 @@ export default (obj) => {
       'justify-content-between',
       'align-items-start',
       'border-0',
-      'fw-bold',
       'border-end-0',
     );
+    if (post.read === false) {
+      liPost.classList.add('fw-bold');
+    }
     if (post.read === true) {
-      liPost.classList.remove('fw-bold');
       liPost.classList.add('fw-normal', 'link-secondary');
     }
     const linkPost = document.createElement('a');
