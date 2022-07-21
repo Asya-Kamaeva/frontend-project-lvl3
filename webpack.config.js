@@ -3,8 +3,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -24,13 +24,14 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      // template: path.resolve(__dirname, 'index.html'),
     }),
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: './dist/*.*',
     }),
-    new MiniCssExtractPlugin({
-      filename: 'style.css',
-    }),
+    // new MiniCssExtractPlugin({
+    //   filename: 'style.css',
+    // }),
   ],
   module: {
     rules: [
@@ -40,7 +41,7 @@ const config = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: ['css-loader', 'sass-loader'],
       },
     ],
   },
@@ -50,7 +51,7 @@ module.exports = () => {
   if (isProduction) {
     config.mode = 'production';
 
-    config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
+    // config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
   } else {
     config.mode = 'development';
   }

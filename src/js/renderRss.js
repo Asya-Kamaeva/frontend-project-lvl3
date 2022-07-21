@@ -37,18 +37,18 @@ export default (obj) => {
       'border-0',
       'border-end-0',
     );
-    if (post.read === false) {
-      liPost.classList.add('fw-bold');
-    }
-    if (post.read === true) {
-      liPost.classList.add('fw-normal', 'link-secondary');
-    }
     const linkPost = document.createElement('a');
     linkPost.setAttribute('href', post.link);
     linkPost.setAttribute('target', '_blank');
     linkPost.setAttribute('rel', 'noopener noreferrer');
     linkPost.setAttribute('data-id', post.postId);
     linkPost.textContent = post.title;
+    if (post.read === false) {
+      linkPost.classList.add('fw-bold');
+    }
+    if (post.read === true) {
+      linkPost.classList.add('fw-normal', 'link-secondary');
+    }
     const btnPost = document.createElement('button');
     btnPost.setAttribute('type', 'button');
     btnPost.setAttribute('data-id', post.postId);

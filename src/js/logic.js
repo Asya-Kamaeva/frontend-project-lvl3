@@ -1,10 +1,10 @@
 import * as yup from 'yup';
+import { uniqueId } from 'lodash';
 import onChange from 'on-change';
 import renderForm from './renderForm.js';
 import renderRss from './renderRss.js';
 import requestData from './requestData.js';
 import parsingData from './parsingData.js';
-import transformData from './transformData.js';
 import updatePosts from './updatePosts.js';
 import modalView from './modalView.js';
 
@@ -14,12 +14,6 @@ const validate = (currentUrl, urls) => {
   const scheme = baseScheme.notOneOf(urls);
   return scheme.validate(currentUrl);
 };
-yup.setLocale({
-  mixed: {
-    required: 'Required Field sdfvsdfvv',
-    default: 'Não é válido',
-  },
-});
 
 export default () => {
   const state = {
@@ -35,12 +29,15 @@ export default () => {
   const form = document.querySelector('form');
 
   const watchedState = onChange(state, (path) => {
+    console.log('!!!path', path);
     if (path === 'urls' || path === 'error') {
+      console.log('!!!!!!!! Render Form');
       renderForm(state);
     }
-    if (path === 'content') {
-      renderRss(state.content);
-    }
+    // if (path === 'content' || path === 'read') {
+    //   console.log('!!!!!!!! Render Rss');
+    //   renderRss(state.content);
+    // }
   });
 
   form.addEventListener('submit', (e) => {
@@ -48,36 +45,39 @@ export default () => {
     const enteredUrl = form.elements.url.value;
     validate(enteredUrl, state.urls)
       .then(() => requestData(enteredUrl))
-      .then((data) => parsingData(data))
       .then((data) => {
-        if (data.querySelector('parsererror')) {
-          throw new Error('notRss');
-        }
-        return data;
-      })
-      .then((data) => {
+        const dataAfterParsing = parsingData(data);
+        const [feed, posts] = dataAfterParsing;
+        feed.id = uniqueId();
+        feed.rssLink = enteredUrl;
+        posts.map((post) => {
+          const newData = {
+            feedId: feed.id,
+            postId: uniqueId(),
+            read: false,
+          };
+          return Object.assign(post, newData);
+        });
         e.target.reset();
         watchedState.isValid = true;
         watchedState.urls.push(enteredUrl);
-        return data;
-      })
-      .then((data) => transformData(data, enteredUrl, state.content))
-      .then(() => {
+        state.content.feedsData.push(feed);
+        state.content.postsData = [...state.content.postsData, ...posts];
+
         renderRss(state.content);
-        state.content.feedsData.map((feed) => {
-          setTimeout(() => updatePosts(feed, state.content), 5000);
-          return feed;
+        state.content.feedsData.map((feed2) => {
+          setTimeout(() => updatePosts(feed2, state.content), 5000);
+          return feed2;
         });
-      })
-      .then(() => {
         const btns = document.querySelectorAll('.btn-sm');
         Array.from(btns).map((btn) => {
-          const id = btn.getAttribute('data-id');
           btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
             const el = state.content.postsData.filter((post) => post.postId === id)[0];
             el.read = true;
-            btn.parentElement.classList.remove('fw-bold');
-            btn.parentElement.classList.add('fw-normal', 'link-secondary');
+            // renderRss(state.content);
+            btn.previousElementSibling.classList.remove('fw-bold');
+            btn.previousElementSibling.classList.add('fw-normal', 'link-secondary');
             modalView(el);
           });
           return btn;
