@@ -1,5 +1,3 @@
-import modalView from './modalView.js';
-
 export default (obj) => {
   const posts = document.querySelector('.posts');
   const feeds = document.querySelector('.feeds');
@@ -58,7 +56,6 @@ export default (obj) => {
     btnPost.textContent = 'Просмотр';
     liPost.append(linkPost, btnPost);
     postList.append(liPost);
-    btnPost.addEventListener('click', () => modalView(post));
     return liPost;
   });
 };

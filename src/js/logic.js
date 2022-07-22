@@ -29,10 +29,12 @@ export default () => {
   const form = document.querySelector('form');
 
   const watchedState = onChange(state, (path) => {
-    console.log('!!!path', path);
     if (path === 'urls' || path === 'error') {
       console.log('!!!!!!!! Render Form');
       renderForm(state);
+    } else {
+      console.log('!!!!!!!! Render Rss');
+      renderRss(state.content);
     }
     // if (path === 'content' || path === 'read') {
     //   console.log('!!!!!!!! Render Rss');
@@ -70,17 +72,15 @@ export default () => {
           return feed2;
         });
         const btns = document.querySelectorAll('.btn-sm');
-        Array.from(btns).map((btn) => {
+        btns.forEach((btn) => {
           btn.addEventListener('click', () => {
+            console.log('click');
             const id = btn.getAttribute('data-id');
-            const el = state.content.postsData.filter((post) => post.postId === id)[0];
+            const el = watchedState.content.postsData.filter((post) => post.postId === id)[0];
             el.read = true;
-            // renderRss(state.content);
-            btn.previousElementSibling.classList.remove('fw-bold');
-            btn.previousElementSibling.classList.add('fw-normal', 'link-secondary');
+
             modalView(el);
           });
-          return btn;
         });
       })
       .catch((err) => {
