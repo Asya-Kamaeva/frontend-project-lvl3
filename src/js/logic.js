@@ -23,24 +23,40 @@ export default () => {
     content: {
       feedsData: [],
       postsData: [],
+      clickElem: 1,
     },
   };
 
   const form = document.querySelector('form');
 
   const watchedState = onChange(state, (path) => {
-    if (path === 'urls' || path === 'error') {
-      console.log('!!!!!!!! Render Form');
-      renderForm(state);
-    } else {
-      console.log('!!!!!!!! Render Rss');
-      renderRss(state.content);
+    switch (path) {
+      case 'urls':
+      case 'error':
+        console.log('!!!!!!!! Render Form');
+        renderForm(state);
+        break;
+      case 'content.clickElem':
+        modalView(state.content.clickElem);
+        break;
+      default:
+        renderRss(state.content);
+        clickHandler();
     }
-    // if (path === 'content' || path === 'read') {
-    //   console.log('!!!!!!!! Render Rss');
-    //   renderRss(state.content);
-    // }
   });
+
+  const clickHandler = () => {
+    const btns = document.querySelectorAll('.btn-sm');
+    btns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        console.log('click');
+        const id = btn.getAttribute('data-id');
+        const el = watchedState.content.postsData.filter((post) => post.postId === id)[0];
+        el.read = true;
+        watchedState.content.clickElem = el;
+      });
+    });
+  };
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -67,20 +83,10 @@ export default () => {
         state.content.postsData = [...state.content.postsData, ...posts];
 
         renderRss(state.content);
+        clickHandler();
         state.content.feedsData.map((feed2) => {
           setTimeout(() => updatePosts(feed2, state.content), 5000);
           return feed2;
-        });
-        const btns = document.querySelectorAll('.btn-sm');
-        btns.forEach((btn) => {
-          btn.addEventListener('click', () => {
-            console.log('click');
-            const id = btn.getAttribute('data-id');
-            const el = watchedState.content.postsData.filter((post) => post.postId === id)[0];
-            el.read = true;
-
-            modalView(el);
-          });
         });
       })
       .catch((err) => {
