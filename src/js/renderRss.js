@@ -1,4 +1,15 @@
-export default (obj) => {
+import i18n from 'i18next';
+import ruResource from '../locales/ru.js';
+
+export default (state) => {
+  const i18nextInstance = i18n.createInstance();
+  i18nextInstance.init({
+    lng: 'ru',
+    debug: true,
+    resources: {
+      ru: ruResource,
+    },
+  });
   const posts = document.querySelector('.posts');
   const feeds = document.querySelector('.feeds');
   const postTitle = posts.querySelector('.card-title');
@@ -12,7 +23,7 @@ export default (obj) => {
   postList.innerHTML = '';
   feedsList.innerHTML = '';
 
-  obj.feedsData.map((feed) => {
+  state.feedsData.map((feed) => {
     const liFeeds = document.createElement('li');
     liFeeds.classList.add('list-group-item', 'border-0', 'border-end-0');
     const captureFeeds = document.createElement('h3');
@@ -25,7 +36,7 @@ export default (obj) => {
     feedsList.append(liFeeds);
     return feed;
   });
-  obj.postsData.map((post) => {
+  state.postsData.map((post) => {
     const liPost = document.createElement('li');
     liPost.classList.add(
       'list-group-item',
@@ -53,7 +64,7 @@ export default (obj) => {
     btnPost.setAttribute('data-bs-toggle', 'modal');
     btnPost.setAttribute('data-bs-target', '#modal');
     btnPost.classList.add('btn', 'btn-outline-primary', 'btn-sm');
-    btnPost.textContent = 'Просмотр';
+    btnPost.textContent = i18nextInstance.t('show');
     liPost.append(linkPost, btnPost);
     postList.append(liPost);
     return liPost;

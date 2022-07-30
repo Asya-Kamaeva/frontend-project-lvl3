@@ -1,9 +1,23 @@
-export default (obj) => {
+import i18n from 'i18next';
+import ruResource from '../locales/ru.js';
+
+export default (state) => {
+  const id = state.modal.postId;
+  const activePost = state.content.postsData.find((el) => el.postId === id);
+  const i18nextInstance = i18n.createInstance();
+  i18nextInstance.init({
+    lng: 'ru',
+    debug: true,
+    resources: {
+      ru: ruResource,
+    },
+  });
   const { body } = document;
   const modal = document.querySelector('.modal');
   const title = modal.querySelector('.modal-title');
   const desc = modal.querySelector('.modal-body');
   const closeBtns = modal.querySelectorAll('[type="button"]');
+  const closeBtn = modal.querySelector('.btn-secondary');
   const link = modal.querySelector('.full-article');
   body.classList.add('modal-open');
   body.setAttribute('style', 'overflow: hidden; padding-right: 0px;');
@@ -13,9 +27,11 @@ export default (obj) => {
   modal.removeAttribute('aria-hidden');
   modal.setAttribute('aria-modal', 'true');
 
-  title.textContent = obj.title;
-  desc.innerHTML = obj.desc;
-  link.setAttribute('href', obj.link);
+  title.textContent = activePost.title;
+  desc.innerHTML = activePost.desc;
+  link.setAttribute('href', activePost.link);
+  link.textContent = i18nextInstance.t('fullArticle');
+  closeBtn.textContent = i18nextInstance.t('close');
 
   const div = document.createElement('div');
   div.classList.add('modal-backdrop', 'fade', 'show');

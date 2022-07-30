@@ -23,7 +23,9 @@ export default () => {
     content: {
       feedsData: [],
       postsData: [],
-      clickElem: 1,
+    },
+    modal: {
+      postId: '',
     },
   };
 
@@ -33,11 +35,10 @@ export default () => {
     switch (path) {
       case 'urls':
       case 'error':
-        console.log('!!!!!!!! Render Form');
         renderForm(state);
         break;
-      case 'content.clickElem':
-        modalView(state.content.clickElem);
+      case 'modal.postId':
+        modalView(state);
         break;
       default:
         renderRss(state.content);
@@ -46,17 +47,28 @@ export default () => {
   });
 
   const clickHandler = () => {
-    const btns = document.querySelectorAll('.btn-sm');
-    btns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        console.log('click');
-        const id = btn.getAttribute('data-id');
-        const el = watchedState.content.postsData.filter((post) => post.postId === id)[0];
+    const list = document.querySelector('.list-group');
+    list.addEventListener('click', (e) => {
+      if (e.target.type === 'button') {
+        const id = e.target.getAttribute('data-id');
+        const el = watchedState.content.postsData.find((post) => post.postId === id);
         el.read = true;
-        watchedState.content.clickElem = el;
-      });
+        watchedState.modal.postId = id;
+      }
     });
   };
+
+  // const clickHandler = () => {
+  //   const btns = document.querySelectorAll('.btn-sm');
+  //   btns.forEach((btn) => {
+  //     btn.addEventListener('click', () => {
+  //       const id = btn.getAttribute('data-id');
+  //       const el = watchedState.content.postsData.filter((post) => post.postId === id)[0];
+  //       el.read = true;
+  //       watchedState.modal.postId = id;
+  //     });
+  //   });
+  // };
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -74,19 +86,19 @@ export default () => {
             postId: uniqueId(),
             read: false,
           };
-          return Object.assign(post, newData);
+          const fullPost = Object.assign(post, newData);
+          state.content.postsData.push(fullPost);
+          return fullPost;
         });
         e.target.reset();
-        watchedState.isValid = true;
+        state.isValid = true;
         watchedState.urls.push(enteredUrl);
         state.content.feedsData.push(feed);
-        state.content.postsData = [...state.content.postsData, ...posts];
-
         renderRss(state.content);
         clickHandler();
-        state.content.feedsData.map((feed2) => {
-          setTimeout(() => updatePosts(feed2, state.content), 5000);
-          return feed2;
+        state.content.feedsData.map((eachFeed) => {
+          setTimeout(() => updatePosts(eachFeed, state.content), 5000);
+          return eachFeed;
         });
       })
       .catch((err) => {

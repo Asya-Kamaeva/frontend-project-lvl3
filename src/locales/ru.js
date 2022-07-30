@@ -5,5 +5,8 @@ export default {
     notRss: 'Ресурс не содержит валидный RSS',
     success: 'RSS успешно загружен',
     netWorkError: 'Ошибка сети',
+    show: 'Просмотр',
+    close: 'Закрыть',
+    fullArticle: 'Читать полностью',
   },
 };

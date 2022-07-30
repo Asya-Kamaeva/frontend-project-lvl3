@@ -4,7 +4,7 @@ import ruResource from '../locales/ru.js';
 const input = document.getElementById('url-input');
 const message = document.querySelector('.feedback');
 
-export default (obj) => {
+export default (state) => {
   const i18nextInstance = i18n.createInstance();
   i18nextInstance.init({
     lng: 'ru',
@@ -13,28 +13,13 @@ export default (obj) => {
       ru: ruResource,
     },
   });
-  if (!obj.isValid) {
+  if (!state.isValid) {
     message.textContent = '';
     input.classList.add('is-invalid');
     message.classList.add('text-danger');
-    switch (obj.error) {
-      case 'url':
-        message.textContent = i18nextInstance.t('url');
-        break;
-      case 'notOneOf':
-        message.textContent = i18nextInstance.t('notOneOf');
-        break;
-      case 'notRss':
-        message.textContent = i18nextInstance.t('notRss');
-        break;
-      case 'netWorkError':
-        message.textContent = i18nextInstance.t('netWorkError');
-        break;
-      default:
-        throw new Error(`Unknown value ${obj.error}`);
-    }
+    message.textContent = i18nextInstance.t(state.error);
   }
-  if (obj.isValid) {
+  if (state.isValid) {
     input.classList.remove('is-invalid');
     message.classList.remove('text-danger');
     message.classList.add('text-success');
