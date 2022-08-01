@@ -23,7 +23,7 @@ export default (state) => {
   postList.innerHTML = '';
   feedsList.innerHTML = '';
 
-  state.feedsData.map((feed) => {
+  state.content.feedsData.map((feed) => {
     const liFeeds = document.createElement('li');
     liFeeds.classList.add('list-group-item', 'border-0', 'border-end-0');
     const captureFeeds = document.createElement('h3');
@@ -36,7 +36,7 @@ export default (state) => {
     feedsList.append(liFeeds);
     return feed;
   });
-  state.postsData.map((post) => {
+  state.content.postsData.map((post) => {
     const liPost = document.createElement('li');
     liPost.classList.add(
       'list-group-item',
@@ -68,5 +68,13 @@ export default (state) => {
     liPost.append(linkPost, btnPost);
     postList.append(liPost);
     return liPost;
+  });
+  postList.addEventListener('click', (e) => {
+    if (e.target.type === 'button') {
+      const id = e.target.getAttribute('data-id');
+      const el = state.content.postsData.find((post) => post.postId === id);
+      el.read = true;
+      state.modal.postId = id;
+    }
   });
 };

@@ -38,37 +38,17 @@ export default () => {
         renderForm(state);
         break;
       case 'modal.postId':
+        renderRss(watchedState);
         modalView(state);
         break;
+      case 'content.postsData':
+      case 'content.feedsData':
+        renderRss(watchedState);
+        break;
       default:
-        renderRss(state.content);
-        clickHandler();
+        break;
     }
   });
-
-  const clickHandler = () => {
-    const list = document.querySelector('.list-group');
-    list.addEventListener('click', (e) => {
-      if (e.target.type === 'button') {
-        const id = e.target.getAttribute('data-id');
-        const el = watchedState.content.postsData.find((post) => post.postId === id);
-        el.read = true;
-        watchedState.modal.postId = id;
-      }
-    });
-  };
-
-  // const clickHandler = () => {
-  //   const btns = document.querySelectorAll('.btn-sm');
-  //   btns.forEach((btn) => {
-  //     btn.addEventListener('click', () => {
-  //       const id = btn.getAttribute('data-id');
-  //       const el = watchedState.content.postsData.filter((post) => post.postId === id)[0];
-  //       el.read = true;
-  //       watchedState.modal.postId = id;
-  //     });
-  //   });
-  // };
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -93,13 +73,8 @@ export default () => {
         e.target.reset();
         state.isValid = true;
         watchedState.urls.push(enteredUrl);
-        state.content.feedsData.push(feed);
-        renderRss(state.content);
-        clickHandler();
-        state.content.feedsData.map((eachFeed) => {
-          setTimeout(() => updatePosts(eachFeed, state.content), 5000);
-          return eachFeed;
-        });
+        watchedState.content.feedsData.push(feed);
+        setTimeout(() => updatePosts(state), 5000);
       })
       .catch((err) => {
         watchedState.isValid = false;
