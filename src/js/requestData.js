@@ -1,5 +1,7 @@
+const getFullUrl = (url) => `https://allorigins.hexlet.app/get?disableCache=true&url=${url}`;
+
 export default (url) => {
-  const fullUrl = `https://allorigins.hexlet.app/get?disableCache=true&url=${url}`;
+  const fullUrl = getFullUrl(url);
   return fetch(fullUrl)
     .then((response) => {
       if (response.ok) return response.json();

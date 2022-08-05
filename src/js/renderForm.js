@@ -1,18 +1,7 @@
-import i18n from 'i18next';
-import ruResource from '../locales/ru.js';
-
 const input = document.getElementById('url-input');
 const message = document.querySelector('.feedback');
 
-export default (state) => {
-  const i18nextInstance = i18n.createInstance();
-  i18nextInstance.init({
-    lng: 'ru',
-    debug: true,
-    resources: {
-      ru: ruResource,
-    },
-  });
+export default (state, i18nextInstance) => {
   if (!state.isValid) {
     message.textContent = '';
     input.classList.add('is-invalid');

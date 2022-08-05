@@ -1,15 +1,4 @@
-import i18n from 'i18next';
-import ruResource from '../locales/ru.js';
-
-export default (state) => {
-  const i18nextInstance = i18n.createInstance();
-  i18nextInstance.init({
-    lng: 'ru',
-    debug: true,
-    resources: {
-      ru: ruResource,
-    },
-  });
+export default (state, i18nextInstance) => {
   const posts = document.querySelector('.posts');
   const feeds = document.querySelector('.feeds');
   const postTitle = posts.querySelector('.card-title');
