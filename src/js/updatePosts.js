@@ -1,32 +1,28 @@
-import { uniqueId } from 'lodash';
+import _ from 'lodash';
 import requestData from './requestData.js';
 import parsingData from './parsingData.js';
 
 const updatePosts = (state) => {
   const feeds = state.content.feedsData;
-  feeds.map((feed) => {
-    const link = feed.rssLink;
-    const feedId = feed.id;
-    const oldTitle = state.content.postsData
-      .filter((post) => post.feedId === feedId)
-      .map((item) => item.title);
-
-    requestData(link)
+  const oldPosts = state.content.postsData;
+  const updateProcess = feeds.map((feed) => {
+    requestData(feed.rssLink)
       .then((data) => {
         const [, posts] = parsingData(data);
-        const titles = posts.map((item) => item.title);
-        const newTitles = titles.filter((el) => !oldTitle.includes(el));
-        if (newTitles.length > 0) {
-          newTitles.map((el) => {
-            const newEl = posts.find((item) => item.title === el);
+        const newPosts = posts.filter((post) => {
+          const current = Boolean(oldPosts.find((currentPost) => currentPost.link === post.link));
+          return !current;
+        });
+        if (newPosts.length > 0) {
+          newPosts.map((post) => {
             const newData = {
               feedId: feed.id,
-              postId: uniqueId(),
+              postId: _.uniqueId(),
               read: false,
             };
-            const fullPost = Object.assign(newEl, newData);
+            const fullPost = Object.assign(post, newData);
             state.content.postsData.unshift(fullPost);
-            return newEl;
+            return post;
           });
         }
       })
@@ -35,6 +31,7 @@ const updatePosts = (state) => {
       });
     return feed;
   });
-  setTimeout(() => updatePosts(state), 5000);
+  Promise.all(updateProcess)
+    .then(() => setTimeout(() => updatePosts(state), 5000));
 };
 export default updatePosts;

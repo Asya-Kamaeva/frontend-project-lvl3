@@ -6,8 +6,8 @@ export default (state, i18nextInstance) => {
   const feedsTitle = feeds.querySelector('.card-title');
   const feedsList = feeds.querySelector('.list-group');
 
-  postTitle.textContent = 'Посты';
-  feedsTitle.textContent = 'Фиды';
+  postTitle.textContent = i18nextInstance.t('posts');
+  feedsTitle.textContent = i18nextInstance.t('feeds');
 
   postList.innerHTML = '';
   feedsList.innerHTML = '';

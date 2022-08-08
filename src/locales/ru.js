@@ -8,5 +8,7 @@ export default {
     show: 'Просмотр',
     close: 'Закрыть',
     fullArticle: 'Читать полностью',
+    posts: 'Посты',
+    feeds: 'Фиды',
   },
 };

@@ -7,7 +7,7 @@ export default (state, i18nextInstance) => {
   const closeBtn = modal.querySelector('.btn-secondary');
   const link = modal.querySelector('.full-article');
   title.textContent = activePost.title;
-  desc.innerHTML = activePost.desc;
+  desc.textContent = activePost.desc;
   link.setAttribute('href', activePost.link);
   link.textContent = i18nextInstance.t('fullArticle');
   closeBtn.textContent = i18nextInstance.t('close');
