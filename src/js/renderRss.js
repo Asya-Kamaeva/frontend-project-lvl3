@@ -1,16 +1,33 @@
-export default (state, i18nextInstance) => {
-  const posts = document.querySelector('.posts');
-  const feeds = document.querySelector('.feeds');
-  const postTitle = posts.querySelector('.card-title');
-  const postList = posts.querySelector('.list-group');
-  const feedsTitle = feeds.querySelector('.card-title');
-  const feedsList = feeds.querySelector('.list-group');
+const posts = document.querySelector('.posts');
+const feeds = document.querySelector('.feeds');
+const input = document.querySelector('#url-input');
+const postTitle = posts.querySelector('.card-title');
+const postList = posts.querySelector('.list-group');
+const feedsTitle = feeds.querySelector('.card-title');
+const feedsList = feeds.querySelector('.list-group');
 
+const modalView = (state, i18nextInstance) => {
+  const id = state.modal.clickId;
+  const activePost = state.content.postsData.find((el) => el.postId === id);
+  const modal = document.querySelector('.modal');
+  const title = modal.querySelector('.modal-title');
+  const desc = modal.querySelector('.modal-body');
+  const closeBtn = modal.querySelector('.btn-secondary');
+  const link = modal.querySelector('.full-article');
+  title.textContent = activePost.title;
+  desc.innerHTML = activePost.desc;
+  link.setAttribute('href', activePost.link);
+  link.textContent = i18nextInstance.t('fullArticle');
+  closeBtn.textContent = i18nextInstance.t('close');
+};
+
+export default (state, i18nextInstance) => {
   postTitle.textContent = i18nextInstance.t('posts');
   feedsTitle.textContent = i18nextInstance.t('feeds');
 
   postList.innerHTML = '';
   feedsList.innerHTML = '';
+  input.value = '';
 
   state.content.feedsData.map((feed) => {
     const liFeeds = document.createElement('li');
@@ -41,10 +58,9 @@ export default (state, i18nextInstance) => {
     linkPost.setAttribute('rel', 'noopener noreferrer');
     linkPost.setAttribute('data-id', post.postId);
     linkPost.textContent = post.title;
-    if (post.read === false) {
-      linkPost.classList.add('fw-bold');
-    }
-    if (post.read === true) {
+    linkPost.classList.add('fw-bold');
+    if (state.modal.readedId.indexOf(post.postId) !== -1) {
+      linkPost.classList.remove('fw-bold');
       linkPost.classList.add('fw-normal', 'link-secondary');
     }
     const btnPost = document.createElement('button');
@@ -61,9 +77,9 @@ export default (state, i18nextInstance) => {
   postList.addEventListener('click', (e) => {
     if (e.target.type === 'button') {
       const id = e.target.getAttribute('data-id');
-      const el = state.content.postsData.find((post) => post.postId === id);
-      el.read = true;
-      state.modal.postId = id;
+      state.modal.clickId = id;
+      state.modal.readedId.push(id);
+      modalView(state, i18nextInstance);
     }
   });
 };

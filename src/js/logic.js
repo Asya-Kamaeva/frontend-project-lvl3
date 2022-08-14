@@ -8,7 +8,6 @@ import renderRss from './renderRss.js';
 import requestData from './requestData.js';
 import parsingData from './parsingData.js';
 import updatePosts from './updatePosts.js';
-import modalView from './modalView.js';
 
 const baseScheme = yup.string().url().required();
 
@@ -19,7 +18,8 @@ const validate = (currentUrl, urls) => {
 
 export default () => {
   const state = {
-    isValid: false,
+    isValidForm: false,
+    stateOfFeed: '',
     urls: [],
     error: '',
     content: {
@@ -27,11 +27,14 @@ export default () => {
       postsData: [],
     },
     modal: {
-      postId: '',
+      clickId: '',
+      readedId: [],
     },
   };
 
   const form = document.querySelector('form');
+  const input = document.querySelector('#url-input');
+  const submitBtn = document.querySelector('[type="submit"]');
 
   const i18nextInstance = i18n.createInstance();
   i18nextInstance.init({
@@ -41,16 +44,28 @@ export default () => {
       ru: ruResource,
     },
   }).then(() => {
-    const watchedState = onChange(state, (path) => {
+    const watchedState = onChange(state, (path, value) => {
       switch (path) {
         case 'urls':
         case 'error':
           renderForm(state, i18nextInstance);
           break;
-        case 'modal.postId':
-          renderRss(watchedState, i18nextInstance);
-          modalView(state, i18nextInstance);
+        case 'stateOfFeed':
+          if (value === 'processing') {
+            input.setAttribute('readonly', 'readonly');
+            submitBtn.disabled = true;
+          }
+          if (value === 'processed') {
+            input.removeAttribute('readonly');
+            submitBtn.disabled = false;
+          }
+          if (value === 'failed') {
+            input.removeAttribute('readonly');
+            submitBtn.disabled = false;
+          }
           break;
+        case 'modal.clickId':
+        case 'modal.readedId':
         case 'content.postsData':
         case 'content.feedsData':
           renderRss(watchedState, i18nextInstance);
@@ -63,13 +78,18 @@ export default () => {
       e.preventDefault();
       const enteredUrl = form.elements.url.value;
       validate(enteredUrl, state.urls)
-        .then(() => requestData(enteredUrl))
+        .then(() => {
+          watchedState.stateOfFeed = 'processing';
+          return requestData(enteredUrl);
+        })
         .then((data) => {
           const dataAfterParsing = parsingData(data);
+          watchedState.isValidForm = true;
+          watchedState.urls.push(enteredUrl);
           const [feed, posts] = dataAfterParsing;
           feed.id = uniqueId();
           feed.rssLink = enteredUrl;
-          posts.map((post) => {
+          posts.forEach((post) => {
             const newData = {
               feedId: feed.id,
               postId: uniqueId(),
@@ -79,16 +99,17 @@ export default () => {
             state.content.postsData.push(fullPost);
             return fullPost;
           });
-          e.target.reset();
-          state.isValid = true;
-          watchedState.urls.push(enteredUrl);
+          watchedState.stateOfFeed = 'processed';
           watchedState.content.feedsData.push(feed);
-          setTimeout(() => updatePosts(watchedState), 5000);
         })
         .catch((err) => {
-          watchedState.isValid = false;
+          if (err.name === 'ValidationError' || err.name === 'Error') {
+            watchedState.isValidForm = false;
+          }
+          watchedState.stateOfFeed = 'failed';
           watchedState.error = err.type !== undefined ? err.type : err.message;
         });
     });
+    setTimeout(() => updatePosts(watchedState), 5000);
   });
 };
