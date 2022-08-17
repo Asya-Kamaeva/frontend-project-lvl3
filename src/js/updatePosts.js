@@ -14,11 +14,10 @@ const updatePosts = (state) => {
           return !current;
         });
         if (newPosts.length > 0) {
-          newPosts.map((post) => {
+          newPosts.forEach((post) => {
             const newData = {
               feedId: feed.id,
               postId: _.uniqueId(),
-              read: false,
             };
             const fullPost = Object.assign(post, newData);
             state.content.postsData.unshift(fullPost);

@@ -93,11 +93,9 @@ export default () => {
             const newData = {
               feedId: feed.id,
               postId: uniqueId(),
-              read: false,
             };
             const fullPost = Object.assign(post, newData);
             state.content.postsData.push(fullPost);
-            return fullPost;
           });
           watchedState.stateOfFeed = 'processed';
           watchedState.content.feedsData.push(feed);
